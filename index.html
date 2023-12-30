@@ -1,56 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guess the Number Game</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      margin: 50px;
-    }
+import pygame
+import sys
 
-    #output {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
+# Inisialisasi Pygame
+pygame.init()
 
-    #inputBox {
-      margin-top: 20px;
-    }
+# Ukuran layar
+screen_width = 800
+screen_height = 600
 
-    button {
-      padding: 10px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <h1>Guess the Number Game</h1>
+# Warna
+white = (255, 255, 255)
 
-  <p id="output">Can you guess the number between 1 and 10?</p>
+# Membuat layar
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Cat Mario")
 
-  <div id="inputBox">
-    <label for="guess">Your Guess: </label>
-    <input type="number" id="guess" min="1" max="10" required>
-    <button onclick="checkGuess()">Submit Guess</button>
-  </div>
+# Karakter
+player_width = 50
+player_height = 50
+player_x = screen_width // 2 - player_width // 2
+player_y = screen_height - player_height - 10
+player_speed = 5
 
-  <script>
-    // Generate a random number between 1 and 10
-    const secretNumber = Math.floor(Math.random() * 10) + 1;
+# Gravitasi
+gravity = 1
+player_jump = -15
+jumping = False
 
-    function checkGuess() {
-      const userGuess = document.getElementById('guess').value;
+# Menggambar pemain
+def draw_player(x, y):
+    pygame.draw.rect(screen, white, [x, y, player_width, player_height])
 
-      if (userGuess == secretNumber) {
-        document.getElementById('output').innerHTML = 'Congratulations! You guessed the correct number!';
-      } else {
-        document.getElementById('output').innerHTML = 'Sorry, try again. The correct number was ' + secretNumber + '.';
-      }
-    }
-  </script>
-</body>
-</html>
+# Perulangan permainan
+clock = pygame.time.Clock()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    keys = pygame.key.get_pressed()
+
+    # Gerakan pemain
+    if keys[pygame.K_LEFT] and player_x > 0:
+        player_x -= player_speed
+    if keys[pygame.K_RIGHT] and player_x < screen_width - player_width:
+        player_x += player_speed
+
+    # Lompatan pemain
+    if not jumping:
+        if keys[pygame.K_SPACE]:
+            jumping = True
+    else:
+        if player_y < screen_height - player_height - 10:
+            player_y += gravity
+        else:
+            jumping = False
+
+    # Menggambar latar belakang
+    screen.fill((0, 0, 0))
+
+    # Menggambar pemain
+    draw_player(player_x, player_y)
+
+    # Update layar
+    pygame.display.update()
+
+    # Mengatur kecepatan permainan
+    clock.tick(30)
