@@ -1,71 +1,17 @@
-import pygame
-import sys
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-play Video Loop</title>
+</head>
+<body>
 
-# Inisialisasi Pygame
-pygame.init()
+<h1></h1>
 
-# Ukuran layar
-screen_width = 800
-screen_height = 600
+<video width="640" height="360" autoplay loop>
+    <source src="https://v16-vod.capcutvod.com/ed731cd407a5dc4a2b895e25b3c7b072/658c4140/video/tos/alisg/tos-alisg-ve-8fe9aq-sg/o8IGNKQzkBIBMcgfhNcZUCIbuBE7tfYg8tE1LX/?a=3006&ch=0&cr=3&dr=0&lr=all&cd=0%7C0%7C0%7C&cv=1&br=1306&bt=653&bti=Nzk6NWYyMjA6&cs=0&ds=3&ft=GNvlXInz7ThMCdPmXq8Zmo&mime_type=video_mp4&qs=0&rc=ZjY3OTZoOGQ7NDZkNTc2N0BpM2ZseTQ6ZmVsbTMzOGVkNEBfNl40XjYzXjQxYmFjLTViYSMxLS1hcjRvM3FgLS1kYi1zcw%3D%3D&l=202312270922315BBD610992C14C12CE30&btag=e00088000" type="video/mp4">
+    Your browser does not support the video element.
+</video>
 
-# Warna
-white = (255, 255, 255)
-
-# Membuat layar
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Cat Mario")
-
-# Karakter
-player_width = 50
-player_height = 50
-player_x = screen_width // 2 - player_width // 2
-player_y = screen_height - player_height - 10
-player_speed = 5
-
-# Gravitasi
-gravity = 1
-player_jump = -15
-jumping = False
-
-# Menggambar pemain
-def draw_player(x, y):
-    pygame.draw.rect(screen, white, [x, y, player_width, player_height])
-
-# Perulangan permainan
-clock = pygame.time.Clock()
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
-    keys = pygame.key.get_pressed()
-
-    # Gerakan pemain
-    if keys[pygame.K_LEFT] and player_x > 0:
-        player_x -= player_speed
-    if keys[pygame.K_RIGHT] and player_x < screen_width - player_width:
-        player_x += player_speed
-
-    # Lompatan pemain
-    if not jumping:
-        if keys[pygame.K_SPACE]:
-            jumping = True
-    else:
-        if player_y < screen_height - player_height - 10:
-            player_y += gravity
-        else:
-            jumping = False
-
-    # Menggambar latar belakang
-    screen.fill((0, 0, 0))
-
-    # Menggambar pemain
-    draw_player(player_x, player_y)
-
-    # Update layar
-    pygame.display.update()
-
-    # Mengatur kecepatan permainan
-    clock.tick(30)
+</body>
+</html>
